@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "wonocraft"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Show live AI activity and usage from a local 9router instance",
+        "EnabledByDefault": true,
+        "Icon": "network-server",
+        "Id": "com.wonocraft.aistatus",
+        "License": "LGPL-2.1-or-later",
+        "Name": "AI Status (9router)",
+        "Version": "1.0.0",
+        "Website": "https://github.com/hakibro/plasma-ai-status"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

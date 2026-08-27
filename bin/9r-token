@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""Print the 9router CLI token used by the widget (x-9r-cli-token header).
+
+Token = sha256(machineId + "9r-cli-auth" + cliSecret)[:16], the same scheme the
+official 9router CLI uses. Reads from ~/.9router (or $DATA_DIR). Stdlib only.
+"""
+import hashlib
+import os
+import sys
+
+
+def read(path):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return fh.read().strip()
+    except OSError:
+        return ""
+
+
+def main():
+    data = os.environ.get("DATA_DIR") or os.path.join(os.path.expanduser("~"), ".9router")
+    machine_id = read(os.path.join(data, "machine-id"))
+    secret = read(os.path.join(data, "auth", "cli-secret"))
+    if not machine_id or not secret:
+        sys.stderr.write(
+            "error: could not read %s/machine-id or %s/auth/cli-secret. "
+            "Is 9router installed and has it been run at least once?\n" % (data, data)
+        )
+        return 1
+    token = hashlib.sha256((machine_id + "9r-cli-auth" + secret).encode()).hexdigest()[:16]
+    print(token)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
